@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Khet — Project Overview</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0a0a0a;
+    --dark:  #1a1a1a;
+    --mid:   #555;
+    --light: #999;
+    --rule:  #ddd;
+    --bg:    #f8f7f4;
+    --white: #ffffff;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--black);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  /* ── LAYOUT ─────────── */
+  .wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ── HEADER ─────────── */
+  header {
+    border-bottom: 2px solid var(--black);
+    padding: 48px 0 28px;
+    margin-bottom: 0;
+  }
+
+  .header-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 16px;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(52px, 10vw, 88px);
+    line-height: 0.95;
+    font-weight: 700;
+    letter-spacing: -2px;
+    margin-bottom: 6px;
+  }
+
+  h1 em {
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .subtitle {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--mid);
+    letter-spacing: 0.04em;
+    margin-bottom: 20px;
+  }
+
+  .lead {
+    font-size: 18px;
+    line-height: 1.65;
+    color: var(--dark);
+    max-width: 600px;
+    border-top: 1px solid var(--rule);
+    padding-top: 20px;
+    margin-top: 20px;
+  }
+
+  /* ── SECTIONS ─────────── */
+  section {
+    padding: 56px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  section:last-of-type { border-bottom: none; }
+
+  .section-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--light);
+    margin-bottom: 12px;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 5vw, 40px);
+    line-height: 1.1;
+    font-weight: 700;
+    margin-bottom: 20px;
+    letter-spacing: -0.5px;
+  }
+
+  h2 em { font-style: italic; font-weight: 400; }
+
+  p {
+    color: var(--dark);
+    margin-bottom: 16px;
+    max-width: 640px;
+  }
+
+  p:last-child { margin-bottom: 0; }
+
+  strong { font-weight: 500; color: var(--black); }
+
+  /* ── PRICE CHAIN ─────────── */
+  .price-chain {
+    margin-top: 36px;
+    border: 1px solid var(--rule);
+  }
+
+  .chain-row {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--rule);
+    gap: 16px;
+  }
+
+  .chain-row:last-child { border-bottom: none; }
+
+  .chain-row.highlight {
+    background: var(--black);
+    color: var(--bg);
+  }
+
+  .chain-row.highlight .actor,
+  .chain-row.highlight .chain-note { color: #aaa; }
+
+  .actor {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--mid);
+  }
+
+  .chain-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .chain-note {
+    font-size: 12px;
+    color: var(--light);
+    grid-column: 1 / -1;
+    padding-top: 0;
+    margin-top: -8px;
+    padding-bottom: 4px;
+  }
+
+  .chain-header {
+    background: var(--rule);
+    padding: 10px 20px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mid);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* ── NOTE BOX ─────────── */
+  .note {
+    margin-top: 28px;
+    border-left: 3px solid var(--black);
+    padding: 16px 20px;
+    background: var(--white);
+    font-size: 15px;
+    color: var(--dark);
+    line-height: 1.65;
+  }
+
+  .note strong { font-weight: 600; }
+
+  /* ── TERMS ─────────── */
+  .term {
+    margin-top: 32px;
+    padding-top: 28px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .term:first-of-type { margin-top: 0; padding-top: 0; border-top: none; }
+
+  .term-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--light);
+    margin-bottom: 6px;
+  }
+
+  .term h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+
+  .term h3 em { font-style: italic; font-weight: 400; }
+
+  .analogy {
+    margin-top: 12px;
+    padding: 12px 16px;
+    background: var(--white);
+    border: 1px solid var(--rule);
+    font-size: 14px;
+    color: var(--mid);
+    font-style: italic;
+    line-height: 1.6;
+  }
+
+  /* ── STEPS ─────────── */
+  .steps { margin-top: 8px; }
+
+  .step {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 16px;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: start;
+  }
+
+  .step:last-child { border-bottom: none; }
+
+  .step-n {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--light);
+    padding-top: 3px;
+  }
+
+  .step h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+
+  .step p { font-size: 15px; margin-bottom: 0; max-width: none; }
+
+  .step-tag {
+    display: inline-block;
+    margin-top: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    border: 1px solid var(--rule);
+    padding: 3px 9px;
+    color: var(--mid);
+  }
+
+  /* ── COMPARE ─────────── */
+  .compare {
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid var(--black);
+  }
+
+  @media (max-width: 560px) {
+    .compare { grid-template-columns: 1fr; }
+  }
+
+  .compare-col { padding: 24px; }
+
+  .compare-col + .compare-col {
+    border-left: 1px solid var(--black);
+  }
+
+  @media (max-width: 560px) {
+    .compare-col + .compare-col {
+      border-left: none;
+      border-top: 1px solid var(--black);
+    }
+  }
+
+  .compare-col h3 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .compare-item {
+    font-size: 14px;
+    color: var(--dark);
+    padding: 8px 0;
+    border-bottom: 1px solid var(--rule);
+    line-height: 1.5;
+  }
+
+  .compare-item:last-child { border-bottom: none; padding-bottom: 0; }
+
+  /* ── NUMBERS ─────────── */
+  .numbers {
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+  }
+
+  .num-card {
+    background: var(--bg);
+    padding: 24px 20px;
+  }
+
+  .num-big {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 8px;
+    letter-spacing: -1px;
+  }
+
+  .num-label {
+    font-size: 13px;
+    color: var(--mid);
+    line-height: 1.4;
+  }
+
+  /* ── STACK TABLE ─────────── */
+  .stack-table {
+    margin-top: 32px;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .stack-table th {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--mid);
+    text-align: left;
+    padding: 10px 16px;
+    background: var(--white);
+    border-bottom: 2px solid var(--black);
+  }
+
+  .stack-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+    color: var(--dark);
+  }
+
+  .stack-table tr:last-child td { border-bottom: none; }
+
+  .stack-table td:first-child {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    white-space: nowrap;
+    color: var(--black);
+  }
+
+  .stack-table td:nth-child(2) {
+    font-weight: 500;
+    color: var(--black);
+  }
+
+  /* ── FOOTER ─────────── */
+  footer {
+    padding: 40px 0 60px;
+    border-top: 2px solid var(--black);
+    margin-top: 0;
+  }
+
+  footer p {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--light);
+    letter-spacing: 0.06em;
+  }
+
+  /* ── REVEAL ─────────── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .reveal.on { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- HEADER -->
+  <header> 
+    <p class="lead">
+      A marketplace that lets Nepal's farmers sell directly to restaurants, hotels, and schools — 
+      with payment guaranteed by code before a single vegetable is loaded onto a truck.
+    </p>
+  </header>
+
+  <!-- 1. THE PROBLEM -->
+  <section class="reveal">
+    <div class="section-num">01 — The Problem</div>
+    <h2>Farmers grow the food.<br><em>Middlemen take the money.</em></h2>
+    <p>
+      Right now, a tomato that leaves a farm in Dhading at <strong>NPR 15–25 per kg</strong> 
+      arrives at a Kathmandu restaurant for <strong>NPR 99–149 per kg</strong>. 
+      The farmer receives roughly one-fifth of what the buyer pays. Not because of 
+      transport costs — those are real but small — but because five to seven layers 
+      of people in the middle each take a cut.
+    </p>
+    <p>
+      The farmer has no way to know what the market price actually is today. They 
+      have no direct connection to buyers in the city. And even when they do sell 
+      — to the government dairy, for example — there is no way to make that buyer 
+      actually pay on time. The state-owned Dairy Development Corporation (DDC) 
+      has owed farmers billions of rupees in unpaid dues for years, peaking at 
+      <strong>NPR 3 billion</strong> combined with private dairies in recent years, 
+      with farmers going unpaid for up to nine months at a time.
+    </p>
+
+    <!-- Price chain -->
+    <div class="price-chain">
+      <div class="chain-header">
+        <span>Tomato price journey · Kalimati data, April 2026</span>
+        <span>per kg</span>
+      </div>
+
+      <div class="chain-row highlight">
+        <div>
+          <div class="actor">Farmer gets</div>
+        </div>
+        <div></div>
+        <div class="chain-price">NPR 15–25</div>
+        <div class="chain-note">What a local collector pays at the farm gate</div>
+      </div>
+
+      <div class="chain-row">
+        <div><div class="actor">Collector</div></div>
+        <div></div>
+        <div class="chain-price">NPR 35</div>
+        <div class="chain-note">Aggregates from multiple farms, adds markup</div>
+      </div>
+
+      <div class="chain-row">
+        <div><div class="actor">Transporter</div></div>
+        <div></div>
+        <div class="chain-price">NPR 48</div>
+        <div class="chain-note">Loads and drives to Kathmandu</div>
+      </div>
+
+      <div class="chain-row">
+        <div><div class="actor">Kalimati wholesale</div></div>
+        <div></div>
+        <div class="chain-price">NPR 65–75</div>
+        <div class="chain-note">Official government market price, April 15 2026 (Artha Kendra / Kalimati Board)</div>
+      </div>
+
+      <div class="chain-row">
+        <div><div class="actor">Retail buyer pays</div></div>
+        <div></div>
+        <div class="chain-price">NPR 99–149</div>
+        <div class="chain-note">What a restaurant or household actually pays</div>
+      </div>
+    </div>
+
+    <div class="note">
+      <strong>Three things cause this:</strong> Farmers don't know the market price, so they can't negotiate. 
+      They have no way to reach buyers directly, so they're forced to accept whatever the local 
+      collector offers. And payment promises — especially from government bodies — are unenforceable, 
+      so buyers can delay or simply not pay for months.
+    </div>
+  </section>
+
+  <!-- 2. WHAT KHET DOES -->
+  <section class="reveal">
+    <div class="section-num">02 — What Khet Does</div>
+    <h2>Three problems.<br><em>One solution.</em></h2>
+    <p>
+      Khet is an app where farmers list their crops for sale. Buyers — restaurants, hotels, 
+      schools, anyone — browse and place orders. The buyer's money is held securely by code 
+      the moment they click "order." The farmer ships knowing the money is already locked and 
+      waiting. When the buyer confirms delivery, the money releases instantly — in under a second.
+    </p>
+    <p>
+      No waiting. No promises. No middlemen. The code handles the trust that used to require 
+      either personal relationships or expensive lawyers.
+    </p>
+
+    <div class="numbers">
+      <div class="num-card">
+        <div class="num-big">NPR 45</div>
+        <div class="num-label">Target farm-gate price per kg on Khet (vs. NPR 15–25 today)</div>
+      </div>
+      <div class="num-card">
+        <div class="num-big">0.4s</div>
+        <div class="num-label">Time for payment to reach farmer after buyer confirms delivery</div>
+      </div>
+      <div class="num-card">
+        <div class="num-big">7 → 0</div>
+        <div class="num-label">Middlemen layers removed between farmer and buyer</div>
+      </div>
+      <div class="num-card">
+        <div class="num-big">3.8M</div>
+        <div class="num-label">Farming households in Nepal who could benefit</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. TERMS EXPLAINED -->
+  <section class="reveal">
+    <div class="section-num">03 — Key Concepts</div>
+    <h2>What the tech<br><em>actually means</em></h2>
+    <p>
+      Every unfamiliar word below, explained without assuming you know anything about 
+      crypto or blockchain.
+    </p>
+
+    <div class="term">
+      <div class="term-label">Concept 01</div>
+      <h3>Blockchain — <em>a shared record no one can erase</em></h3>
+      <p>
+        Imagine a notebook that thousands of computers around the world all hold an identical 
+        copy of at the same time. When something new is written in it, every copy updates at once. 
+        Nobody can secretly change or delete a line because everyone else's copy would instantly 
+        disagree with the change. That's a blockchain — a shared record that nobody controls alone.
+      </p>
+      <p>
+        For Khet, this means: once a deal is recorded, nobody — not Khet the company, not the 
+        government, not a hacker — can alter the terms or erase the payment obligation.
+      </p>
+      <div class="analogy">
+        Think of a classroom attendance register that every student, every teacher, 
+        and every parent holds a copy of. You can't secretly cross out your absence 
+        because everyone else's copy still shows it.
+      </div>
+    </div>
+
+    <div class="term">
+      <div class="term-label">Concept 02</div>
+      <h3>Solana — <em>the specific blockchain Khet runs on</em></h3>
+      <p>
+        There are many blockchains. The oldest, Bitcoin, takes 10 minutes to confirm a 
+        transaction and costs the equivalent of NPR 600–700 per transaction in fees. 
+        That's completely unusable for a farmer selling NPR 500 worth of vegetables.
+      </p>
+      <p>
+        Solana is a different blockchain — much newer and much faster. A transaction settles 
+        in about 0.4 seconds and costs roughly <strong>NPR 0.02 in fees</strong>. Even a very 
+        small sale is economically viable. That's why Khet uses it.
+      </p>
+      <div class="analogy">
+        Like comparing a bullock cart (Bitcoin — slow, expensive) to a bullet train 
+        (Solana — fast, cheap) for sending a letter across the country.
+      </div>
+    </div>
+
+    <div class="term">
+      <div class="term-label">Concept 03</div>
+      <h3>Stablecoin (USDC) — <em>digital money that doesn't fluctuate in value</em></h3>
+      <p>
+        Most people have heard that Bitcoin goes up 30% one week and crashes 40% the next. 
+        That would be terrible for a farmer who needs to pay for seeds next Tuesday. A 
+        stablecoin is completely different: <strong>1 USDC always equals exactly 1 US Dollar</strong>, 
+        no matter what. It's just regular money stored on a blockchain instead of in a bank.
+      </p>
+      <p>
+        Khet uses USDC so farmers are paid in stable value. They can convert it to Nepali 
+        rupees through exchange partners — the same way people transfer money through 
+        eSewa or Khalti today, just different rails.
+      </p>
+      <div class="analogy">
+        Like eSewa balance. 1 eSewa rupee = 1 real rupee, always. You don't worry 
+        about your eSewa balance suddenly losing value. USDC works the same way, 
+        just on a blockchain instead of eSewa's servers.
+      </div>
+    </div>
+
+    <div class="term">
+      <div class="term-label">Concept 04</div>
+      <h3>Escrow — <em>a lockbox that holds money until conditions are met</em></h3>
+      <p>
+        When you buy a house, you don't hand the full amount directly to the seller on 
+        day one, hoping they'll hand you the keys later. A neutral party — traditionally 
+        a lawyer — holds the money. Once the keys are handed over and everything is confirmed, 
+        the lawyer releases the money to the seller. That holding arrangement is called escrow.
+      </p>
+      <p>
+        In Khet, there's no lawyer. Instead, code running on Solana plays that role. When 
+        a buyer places an order, their payment moves into a digital lockbox controlled entirely 
+        by that code. The buyer can't take the money back. Khet the company can't touch it either. 
+        Only the condition — "buyer confirms delivery" — unlocks it.
+      </p>
+      <div class="analogy">
+        Like buying something on OLX. You wouldn't wire the money to a stranger before 
+        seeing the item. Khet's escrow holds the money in code until both sides 
+        confirm the deal happened.
+      </div>
+    </div>
+
+    <div class="term">
+      <div class="term-label">Concept 05</div>
+      <h3>Smart Contract — <em>a contract that enforces itself automatically</em></h3>
+      <p>
+        A contract is normally a document that says "if X happens, then Y must happen." 
+        But enforcing it requires lawyers, courts, and months of time. A smart contract 
+        is the same idea — "if X happens, then Y happens" — except the logic is written 
+        in computer code that runs automatically on the blockchain. There's no way to 
+        ignore it, override it, or delay it. The code runs when its conditions are met. 
+        Full stop.
+      </p>
+      <p>
+        For Khet, the smart contract says: "When the buyer taps Confirm Delivery, release 
+        the locked payment to the farmer's wallet." That rule cannot be bent by anyone.
+      </p>
+      <div class="analogy">
+        Like a vending machine. You put in NPR 50 and press B3. The machine 
+        gives you chips automatically. It doesn't ask for a manager's approval. 
+        The mechanism itself enforces the deal.
+      </div>
+    </div>
+
+    <div class="term">
+      <div class="term-label">Concept 06</div>
+      <h3>Wallet — <em>your account and identity on the blockchain</em></h3>
+      <p>
+        A crypto wallet is like a bank account and a username combined into one thing. 
+        It has two parts: a public address (like an account number — you share this so 
+        people can send you money) and a private key (like your PIN or password — you 
+        never share this, ever). On Khet, farmers get a wallet where payments arrive 
+        the moment a delivery is confirmed.
+      </p>
+      <p>
+        Farmers who aren't comfortable with crypto get a wallet created for them 
+        automatically in the background — they just see a phone number login, like 
+        any other app. The blockchain part is invisible.
+      </p>
+      <div class="analogy">
+        Your eSewa mobile number is your "public address" — anyone can send 
+        money to it. Your eSewa PIN is your "private key" — only you can 
+        spend from it. Same concept.
+      </div>
+    </div>
+
+    <div class="term">
+      <div class="term-label">Concept 07</div>
+      <h3>Kalimati Oracle — <em>live price data from Nepal's biggest vegetable market</em></h3>
+      <p>
+        The Kalimati Fruits and Vegetable Market publishes official wholesale prices 
+        every morning for every major crop — straight from the Government of Nepal's 
+        Ministry of Agriculture. These are public numbers. 
+      </p>
+      <p>
+        Khet's oracle is a simple background service that fetches those numbers at 6am 
+        every day and shows them in the app. The word "oracle" just means "a system 
+        that brings outside real-world information into the blockchain." When a farmer 
+        in Dhading opens Khet, they see that Kalimati's tomato price today is 
+        NPR 65–75 per kg — so they know not to accept NPR 20 from the local collector.
+      </p>
+      <div class="analogy">
+        Like checking Hamrobazaar or Sasto Deal before selling your old laptop. 
+        You know the going market price, so nobody can lowball you.
+      </div>
+    </div>
+
+    <div class="term">
+      <div class="term-label">Concept 08</div>
+      <h3>PDA (Program Derived Address) — <em>the vault nobody has the key to</em></h3>
+      <p>
+        When a buyer locks money in escrow on Solana, it goes into a special type of 
+        account called a PDA. What makes it special: nobody has the private key to it. 
+        Not the buyer, not the farmer, not Khet the company. The only thing that can 
+        move money out of it is the smart contract code itself — and only when the 
+        coded conditions are met.
+      </p>
+      <p>
+        This is what makes Khet's escrow genuinely trustless. The money isn't held 
+        by Khet in a bank account that Khet could theoretically access. It's held by 
+        math and code.
+      </p>
+      <div class="analogy">
+        Like a bank vault that physically cannot open until two conditions are 
+        both true: the farmer confirms shipment, and the buyer confirms receipt. 
+        Nobody holds the key — the door just opens when both conditions are satisfied.
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. HOW IT WORKS -->
+  <section class="reveal">
+    <div class="section-num">04 — How It Works</div>
+    <h2>A deal from farm<br><em>to payment, step by step</em></h2>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">01</div>
+        <div>
+          <h3>Farmer opens the app and sees today's real price</h3>
+          <p>
+            Ram, a farmer in Dhading, opens Khet. The app pulls the Kalimati oracle data from 
+            this morning: tomatoes are at <strong>NPR 65–75 per kg</strong> at wholesale. 
+            A local collector came to his farm offering NPR 20. Ram now knows the actual market rate.
+          </p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-n">02</div>
+        <div>
+          <h3>Farmer creates a listing on the blockchain</h3>
+          <p>
+            Ram lists: 500 kg of tomatoes, NPR 45 per kg, Dhading district, available Thursday. 
+            He taps Submit. This listing is written to the Solana blockchain — permanently and 
+            publicly. Every buyer in Nepal can now see it.
+          </p>
+          <span class="step-tag">On-chain: list_produce()</span>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-n">03</div>
+        <div>
+          <h3>A buyer in Kathmandu finds the listing and places an order</h3>
+          <p>
+            Sunrise Restaurant in Thamel needs 200 kg of tomatoes. They find Ram's listing — 
+            NPR 45 vs Kalimati's NPR 65. They tap Order. Their wallet shows a confirmation 
+            screen: <strong>NPR 9,000 + 1% platform fee</strong>.
+          </p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-n">04</div>
+        <div>
+          <h3>Payment locks into the escrow vault — automatically</h3>
+          <p>
+            The moment the buyer confirms, their USDC moves from their wallet into a PDA vault 
+            controlled only by the smart contract. The buyer cannot get it back. Khet cannot 
+            touch it. Ram gets a notification: <em>"Order confirmed. Your payment is secured in escrow."</em>
+          </p>
+          <span class="step-tag">On-chain: place_order() → PDA vault locked</span>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-n">05</div>
+        <div>
+          <h3>Ram loads his tomatoes and delivers</h3>
+          <p>
+            This part is entirely physical — it happens in the real world. Ram loads his truck 
+            and drives to Thamel. The blockchain just waits, holding the money safely.
+          </p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-n">06</div>
+        <div>
+          <h3>Buyer confirms delivery received</h3>
+          <p>
+            The restaurant manager inspects the tomatoes. Satisfied, they tap 
+            <strong>Confirm Delivery</strong> in the app. This sends a transaction to Solana 
+            that triggers the smart contract's release condition.
+          </p>
+          <span class="step-tag">On-chain: confirm_delivery()</span>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-n">07</div>
+        <div>
+          <h3>Ram receives the money in 0.4 seconds</h3>
+          <p>
+            The smart contract automatically releases <strong>NPR 8,910</strong> (minus 1% 
+            platform fee) to Ram's wallet. Instantly. No bank transfer waiting period. 
+            No broken promise. No "we'll pay you next month." The transaction is recorded 
+            permanently on the Solana blockchain — visible to anyone, forever.
+          </p>
+          <span class="step-tag">PDA vault → farmer's wallet · automatic · irreversible</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="note">
+      <strong>What if something goes wrong?</strong> If the buyer never taps Confirm Delivery within 
+      7 days, the smart contract automatically refunds them — no human decision needed. If there's 
+      a real dispute (wrong quantity, quality issue), either party can raise it. Funds stay frozen 
+      while a Khet team member reviews the evidence and makes a decision. The rules are baked into 
+      the code before any deal starts.
+    </div>
+  </section>
+
+  <!-- 5. BEFORE / AFTER -->
+  <section class="reveal">
+    <div class="section-num">05 — Before vs After</div>
+    <h2>What actually<br><em>changes for the farmer</em></h2>
+
+    <div class="compare">
+      <div class="compare-col">
+        <h3>Without Khet — today</h3>
+        <div class="compare-item">No idea what the crop is worth at market today</div>
+        <div class="compare-item">Can only sell to whoever physically shows up at the farm</div>
+        <div class="compare-item">Receives NPR 15–25/kg while Kalimati wholesale is NPR 65–75</div>
+        <div class="compare-item">Government signs payment agreements and ignores them for months</div>
+        <div class="compare-item">DDC + private dairies have owed farmers NPR 3 billion+ in unpaid dues</div>
+        <div class="compare-item">No legal recourse — protests in the street are the only option</div>
+      </div>
+      <div class="compare-col">
+        <h3>With Khet</h3>
+        <div class="compare-item">Sees the Kalimati benchmark price every morning before negotiating</div>
+        <div class="compare-item">Listings visible to any restaurant, hotel, or institution in Nepal</div>
+        <div class="compare-item">Direct price target: NPR 40–50/kg — roughly 100–150% income increase</div>
+        <div class="compare-item">Payment locked in escrow by code before produce is dispatched</div>
+        <div class="compare-item">Automatic release in 0.4 seconds — no promises, no delays possible</div>
+        <div class="compare-item">Government agencies must pre-fund escrow — "pay later" is structurally impossible</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. TECH STACK -->
+  <section class="reveal">
+    <div class="section-num">06 — Tech Stack</div>
+    <h2>What we're<br><em>building with</em></h2>
+
+    <table class="stack-table">
+      <thead>
+        <tr>
+          <th>Layer</th>
+          <th>Technology</th>
+          <th>Why this choice</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Blockchain</td>
+          <td>Solana</td>
+          <td>0.4 second transactions, NPR 0.02 fees — the only chain where micro-payments for farmers are economically viable</td>
+        </tr>
+        <tr>
+          <td>Smart contract</td>
+          <td>Rust + Anchor</td>
+          <td>Anchor is a toolkit that makes writing Solana programs faster and safer. Handles: list, order, confirm, refund, dispute</td>
+        </tr>
+        <tr>
+          <td>Payment token</td>
+          <td>USDC</td>
+          <td>Stablecoin — always 1:1 with USD. No price volatility. Farmers aren't paid in "risky crypto." Convertible to NPR via partners</td>
+        </tr>
+        <tr>
+          <td>Mobile app</td>
+          <td>React Native (Expo)</td>
+          <td>One codebase for Android + iOS. Nepali and English. Mobile-first because 80% of rural Nepal uses phones, not laptops</td>
+        </tr>
+        <tr>
+          <td>Price data</td>
+          <td>Node.js service</td>
+          <td>Fetches official Kalimati price data every morning at 6am from the government's public source. Displays in-app as benchmark</td>
+        </tr>
+        <tr>
+          <td>Backend</td>
+          <td>Node.js + PostgreSQL</td>
+          <td>Off-chain search index for browsing listings, push notifications, user profiles. Normal web backend — blockchain isn't needed for everything</td>
+        </tr>
+        <tr>
+          <td>Wallet</td>
+          <td>Phantom / Backpack</td>
+          <td>Standard Solana wallets. Farmers who aren't crypto-familiar get a custodial wallet created automatically — they just see a phone number login</td>
+        </tr>
+        <tr>
+          <td>Gov module</td>
+          <td>Multisig + escrow</td>
+          <td>Government agencies must pre-fund an escrow account before any delivery. Makes "we'll pay later" structurally impossible at the protocol level</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 7. REAL CHALLENGES -->
+  <section class="reveal">
+    <div class="section-num">07 — Honest Challenges</div>
+    <h2>What could<br><em>actually go wrong</em></h2>
+    <p>
+      The technical side is proven — escrow systems secure billions of dollars globally in 
+      decentralised finance every day. The real challenges are product and adoption challenges:
+    </p>
+    <p>
+      <strong>Smartphone access.</strong> Many farmers in remote areas don't own smartphones. 
+      Solution: cooperative officers and agri-extension workers act as intermediaries, using the 
+      app on behalf of farmers in their area.
+    </p>
+    <p>
+      <strong>Crypto wallets are confusing.</strong> Most farmers have never used a blockchain wallet 
+      and shouldn't have to learn one. Solution: hide the blockchain completely behind a standard 
+      phone-number login. The wallet is created automatically in the background.
+    </p>
+    <p>
+      <strong>Converting USDC to NPR.</strong> Farmers need real rupees, not stablecoins. Solution: 
+      partner with a licensed fiat on-ramp — similar to how remittance services work today. USDC 
+      arrives in the wallet, they tap "Withdraw to eSewa/bank account," done.
+    </p>
+    <p>
+      <strong>Regulatory.</strong> Nepal's crypto regulations are evolving. We build on the assumption 
+      of compliance and partner with a licensed Nepali financial institution from day one.
+    </p>
+    <p>
+      These are normal startup execution challenges with clear paths. They're not blockers.
+    </p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>Khet — Internal Project Overview · Last updated April 2026</p>
+    <p style="margin-top:8px;">Price data: Kalimati Fruits &amp; Vegetable Market Development Board, Government of Nepal · DDC payment data: Kathmandu Post reporting, 2025–2026</p>
+  </footer>
+
+</div><!-- /wrap -->
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('on');
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
